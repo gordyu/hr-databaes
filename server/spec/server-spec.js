@@ -39,7 +39,7 @@ describe('Persistent Node Chat Server', function () {
         uri: 'http://127.0.0.1:3000/classes/messages',
         json: {
           username: 'Valjean',
-          message: 'In mercy\'s name, three days is all I need.',
+          content: 'In mercys name, three days is all I need.',
           roomname: 'THE room of truth'
         }
       }, function () {
@@ -54,7 +54,7 @@ describe('Persistent Node Chat Server', function () {
           // Should have one result:
           expect(results.length).to.equal(1);
 
-          expect(results[0].content).to.equal('In mercy\'s name, three days is all I need.');
+          expect(results[0].content).to.equal('In mercys name, three days is all I need.');
 
           done();
         });
@@ -64,8 +64,8 @@ describe('Persistent Node Chat Server', function () {
 
   it('Should output all messages from the DB', function (done) {
     // Let's insert a message into the db
-    var queryString = 'INSERT INTO messages (id, roomID, userID, content)' +
-      'VALUES (1, 1, 1, "Men like you can never change!")';
+    var queryString = 'INSERT INTO messages (roomID, userID, content)' +
+      'VALUES (1, 1, "Men like you can never change!")';
     var queryArgs = [];
     // TODO - The exact query string and query args to use
     // here depend on the schema you design, so I'll leave
@@ -79,36 +79,38 @@ describe('Persistent Node Chat Server', function () {
       request('http://127.0.0.1:3000/classes/messages', function (error, response, body) {
         var messageLog = JSON.parse(body);
         expect(messageLog[0].content).to.equal('Men like you can never change!');
-        expect(messageLog[0].roomID).to.equal(1);
+        expect(messageLog[0].roomname).to.equal('THE room of truth');
         done();
       });
     });
   });
 
-  it('Should return 200', function (done) {
-    dbConnection.query(queryString, queryArgs, function (err) {
-      if (err) { throw err; }
+  it('Should return status code 200 for a successful GET request', function (done) {
+    var queryString = 'SELECT * FROM messages;';
+    dbConnection.query(queryString, [], function (err) {
+      if (err) {
+        throw err;
+      }
       const response = request('http://127.0.0.1:3000/classes/messages', function (error, response, body) {
         request('http://127.0.0.1:3000/classes/messages', function (error, response, body) {
           var messageLog = JSON.parse(body);
-          expect(response).to.have.status(200);
+          expect(response.statusCode).to.equal(200);
           done();
         });
       });
     });
   });
 
-  it('Should return 404', function (done) {
-    var queryString = 'INSERT INTO messages (id, roomID, userID, content)' +
-      'VALUES (1, 1, 1, "Men like you can never change!")';
+  it('Should return status code 404 for a failed GET request', function (done) {
+    var queryString = 'SELECT * FROM messages';
     var queryArgs = [];
 
     dbConnection.query(queryString, queryArgs, function (err) {
-      if (err) { throw err; }
-      request('http://127.0.0.1:3000/classes/messages', function (error, response, body) {
-        var messageLog = JSON.parse(body);
-        expect(messageLog[0].content).to.equal('Men like you can never change!');
-        expect(messageLog[0].roomID).to.equal(1);
+      if (err) {
+        throw err;
+      }
+      request('http://127.0.0.1:3000/classes/me$$ages', function (error, response, body) {
+        expect(response.statusCode).to.equal(404);
         done();
       });
     });
