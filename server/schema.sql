@@ -4,7 +4,7 @@ CREATE DATABASE chat;
 USE chat;
 
 CREATE TABLE messages(
-  id SMALLINT NOT NULL,
+  id SMALLINT NOT NULL AUTO_INCREMENT,
   content VARCHAR(255) NOT NULL,
   roomID SMALLINT NOT NULL,
   userID SMALLINT NOT NULL,
@@ -14,13 +14,13 @@ CREATE TABLE messages(
 /* Create other tables and define schemas for them here! */
 
 CREATE TABLE rooms (
-  id SMALLINT NOT NULL,
+  id SMALLINT NOT NULL AUTO_INCREMENT,
   roomname VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE users (
-  id SMALLINT NOT NULL,
+  id SMALLINT NOT NULL AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL,
   PRIMARY KEY (id)
 );
