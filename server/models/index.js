@@ -9,14 +9,13 @@ module.exports = {
         callback('GET Messages callback: ', ...result);
       });
     }, // a function which produces all the messages
-    post: function (callback = () => { }) {
-      //var tempRoomID = db.query()
-      //var tempUserID = db.query()
-      db.query('INSERT INTO messages ', (err, result) => {
+    post: function (message, callback = () => { }) {
+      db.query(`INSERT INTO messages (roomID, content, userID) VALUES (1, '${message.content}', (SELECT users.id FROM users WHERE users.username = '${message.username}'))`, (err, result) => {
         err && console.error(err);
-        callback('POST Messages callback: ', ...result);
+        callback('POST Messages callback: ', result);
       });
     } // a function which can be used to insert a message into the database
+    
   },
 
   users: {
@@ -26,11 +25,10 @@ module.exports = {
         callback('GET Usernames callback: ', ...result);
       });
     },
-    post: function (callback = () => { }) {
-      //how do we get the name into next line?
-      db.query('INSERT INTO users ', (err, result) => {
+    post: function (user, callback = () => { }) {
+      db.query(`INSERT INTO users (username) VALUES ('${user.username}')`, (err, result) => {
         err && console.error(err);
-        callback('POST Usernames callback: ', ...result);
+        callback('POST Usernames callback ', result);
       });
     }
   }

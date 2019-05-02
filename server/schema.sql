@@ -22,7 +22,7 @@ CREATE TABLE rooms (
 CREATE TABLE users (
   id SMALLINT NOT NULL AUTO_INCREMENT,
   username VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id)
+  CONSTRAINT PK_users PRIMARY KEY (id, username)
 );
 
 
