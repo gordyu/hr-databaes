@@ -23,7 +23,7 @@
     "morgan": "^1.4.1",
     "mysql": "^2.4.2",
     "request": "^2.69.0",
-    "sequelize": "^3.21.0"
+    "sequelize": "^3.34.0"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
