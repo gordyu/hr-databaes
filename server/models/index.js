@@ -10,7 +10,7 @@ module.exports = {
       });
     }, // a function which produces all the messages
     post: function (message, callback = () => { }) {
-      db.query(`INSERT INTO messages (roomID, content, userID) VALUES (1, '${message.content}', (SELECT users.id FROM users WHERE users.username = '${message.username}'))`, (err, result) => {
+      db.query(`INSERT INTO messages (roomID, content, userID) VALUES (1, ?, (SELECT users.id FROM users WHERE users.username = ?))`, [message.content, message.username], (err, result) => {
         err && console.error(err);
         callback('POST Messages callback: ', result);
       });
