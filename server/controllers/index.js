@@ -1,36 +1,36 @@
-var models = require('../models');
+var db = require('../db');
 const headers = require('../cors.json');
 
 module.exports = {
   messages: {
     get: function (req, res) {
-      models.messages.get((err, ...results) => {
-        res.writeHead(200, headers);
-        res.write(JSON.stringify(results));
-        res.end();
-      });
+      db.messages.findAll({ include: [db.users] })
+        .then(function (messages) {
+          res.json(messages);
+          // res.end();
+        });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      res.writeHead(201, headers);
-      models.messages.post(req.body, (err, result) => {
-        res.end();
-      });
+      db.messages.create({ where: { username: req.body.username } })
+        .then(() => {
+          res.sendStatus(201);
+          // res.end();
+        });
     }
   },
 
   users: {
     get: function (req, res) {
-      models.users.get((err, ...results) => {
-        res.writeHead(200, headers);
-        res.write(JSON.stringify(results));
-        res.end();
-      });
+      db.users.findAll()
+        .then(function (users) {
+          res.json(users);
+        });
     },
     post: function (req, res) {
-      models.users.post(req.body, (err, result) => {
-        res.writeHead(201, headers);
-        res.end();
-      });
+      db.users.findOrCreate({ where: { username: req.body.username } })
+        .then(() => {
+          res.sendStatus(201);
+        });
     }
   }
 };
