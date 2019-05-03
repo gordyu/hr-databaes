@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 module.exports = {
   messages: {
     get: function (callback = () => { }) {
-      db.query('SELECT messages.content, rooms.roomname, users.username FROM messages, rooms, users WHERE messages.roomID = rooms.id AND messages.userID = users.id', (err, result) => {
+      db.query('SELECT messages.id, messages.content, rooms.roomname, users.username FROM messages, rooms, users WHERE messages.roomID = rooms.id AND messages.userID = users.id', (err, result) => {
         err && console.error(err);
         callback('GET Messages callback: ', ...result);
       });

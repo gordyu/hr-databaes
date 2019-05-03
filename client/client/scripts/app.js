@@ -24,9 +24,10 @@ var App = {
   fetch: function (callback = () => { }) {
     Parse.readAll((data) => {
       console.log('fetch');
+      console.log(JSON.parse(data));
       // examine the response from the server request:
-      Messages.update(data.results, MessagesView.render);
-      Rooms.update(data.results, RoomsView.render);
+      Messages.update(JSON.parse(data), MessagesView.render);
+      Rooms.update(JSON.parse(data), RoomsView.render);
       callback();
     });
   },

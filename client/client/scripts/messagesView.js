@@ -10,14 +10,15 @@ var MessagesView = {
 
   render: function () {
     MessagesView.$chats.html('');
+    console.log(Messages._storage);
     if (Rooms.isSelected('All')) {
       Messages.items()
-        .sortBy('createdAt')
+        // .sortBy('createdAt')
         .each(message => MessagesView.renderMessage(message));
     } else {
       Messages.items()
         .filter(message => Rooms.isSelected(message.roomname))
-        .sortBy('createdAt')
+        // .sortBy('createdAt')
         .each(message => MessagesView.renderMessage(message));
     }
   },

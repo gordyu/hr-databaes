@@ -6,13 +6,13 @@ const Messages = {
 
   update: (messages, callback) => {
     for (let message of messages) {
-      Messages._storage[message.objectId] = message;
+      Messages._storage[message.id] = message;
       callback();
     }
   },
 
   add: (message, callback) => {
-    Messages._storage[message.objectId] = message;
+    Messages._storage[message.id] = message;
     callback();
   }
 

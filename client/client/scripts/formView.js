@@ -9,7 +9,7 @@ var FormView = {
   handleSubmit: function(event) {
     let message = {
       username: App.username,
-      text: FormView.$form.find('#message').val(),
+      content: FormView.$form.find('#message').val(),
       roomname: Rooms._selected
     };
     // Stop the browser from submitting the form
