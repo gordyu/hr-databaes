@@ -4,7 +4,7 @@
   "description": "Build a component-based chat-client using jQuery",
   "dependencies": {
     "chai": "^4.1.2",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "mocha": "^5.2.0",
     "sinon": "^6.3.4",
     "underscore": "^1.9.1"
