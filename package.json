@@ -20,7 +20,7 @@
     "bluebird": "^3.5.4",
     "body-parser": "^1.9.2",
     "cors": "^2.8.5",
-    "express": "^4.10.1",
+    "express": "^4.17.3",
     "morgan": "^1.4.1",
     "mysql": "^2.4.2",
     "request": "^2.69.0",
